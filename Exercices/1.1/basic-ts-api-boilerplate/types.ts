@@ -11,4 +11,14 @@ interface PizzaToUpdate {
 
 type NewPizza = Omit<Pizza, "id">;
 
-export type { Pizza, NewPizza, PizzaToUpdate };
+interface Films{
+  id : number;
+  title : string;
+  director : string;
+  duration :number;
+  budget? : number;
+  description? : string;
+  imageUrl? :string;
+}
+
+export type { Pizza, NewPizza, PizzaToUpdate, Films };
