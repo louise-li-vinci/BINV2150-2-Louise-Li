@@ -13,18 +13,26 @@ const films: Film[] = [
     {id : 2,
       title : "2222aa",
       director : "bb",
-      duration :100,
+      duration :10,
     },
 
     {id : 3,
         title : "3333aa",
         director : "cc",
         duration :100,
+        budget: 123
     }
 ];
 
-router.get("/", (_req, res) => {
-  return res.json(films);
+router.get("/", (req, res) => {
+  if(!req.query["minimum-duration"]){
+    return res.json(films);
+  }
+  const minDuration = Number(req.query["minimum-duration"]);
+  const filteredfilm = films.filter((film) => {
+    return film.duration >= minDuration;
+  });
+  return res.json(filteredfilm);
 });
 
 router.get("/:id",(req, res)=>{
@@ -42,33 +50,29 @@ router.post("/",(req,res)=>{
     !body ||
     typeof body !== "object" ||
     !("title" in body) ||
-    !("image" in body) ||
-    !("volume" in body) ||
-    !("price" in body) ||
+    !("director" in body) ||
+    !("duration" in body) ||
     typeof body.title !== "string" ||
-    typeof body.image !== "string" ||
-    typeof body.volume !== "number" ||
-    typeof body.price !== "number" ||
+    typeof body.director !== "string" ||
+    typeof body.duration !== "number" ||
     !body.title.trim() ||
-    !body.image.trim() ||
-    body.volume <= 0 ||
-    body.price <= 0
-  ) {
+    !body.director.trim() ||
+    body.duration <= 0
+  ){
     return res.sendStatus(400);
   }    
   const {title, director, duration}= body as NewFilm;
   const nextId =
-    films.reduce((maxId, film) => (film.id > maxId ? film.id : maxId), 0) +
-    1;
-  const newDrink: Film = {
+    films.reduce((maxId, film) => (film.id > maxId ? film.id : maxId), 0) + 1;
+  const newFilm: Film = {
     id: nextId,
     title,
     director,
-    duration,
+    duration
   };
 
-  films.push(newDrink);
-  return res.json(newDrink);
+  films.push(newFilm);
+  return res.json(newFilm);
 
 });
 export default router;
