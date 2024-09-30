@@ -1,0 +1,21 @@
+### Read all films
+GET http://localhost:3000/films
+
+### Read all films with File variable
+@baseUrl = http://localhost:3000
+GET {{baseUrl}}/films
+
+### create new film
+POST {{baseUrl}}/films
+Content-Type:application/json
+
+{       
+    "title" : "444AA",
+    "director" : "RRR",
+    "duration" :120,
+    "budget" : 231
+    
+}
+
+### Read all film sorted by min duration (ascending)
+GET {{baseUrl}}/films?minimum-duration=50
