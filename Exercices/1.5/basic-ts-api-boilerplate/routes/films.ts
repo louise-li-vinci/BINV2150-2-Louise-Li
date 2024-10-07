@@ -61,6 +61,13 @@ router.post("/",(req,res)=>{
   ){
     return res.sendStatus(400);
   }    
+  if(
+    films.find((film) => film.title ===body.title)&&
+    films.find((film) => film.director ===body.director)
+    ){
+    return res.sendStatus(409);
+  }
+  
   const {title, director, duration}= body as NewFilm;
   const nextId =
     films.reduce((maxId, film) => (film.id > maxId ? film.id : maxId), 0) + 1;
@@ -74,5 +81,18 @@ router.post("/",(req,res)=>{
   films.push(newFilm);
   return res.json(newFilm);
 
+});
+
+router.delete("/:id", (req, res) => {
+  const idInRequest = parseInt(req.params.id, 10);
+  const foundIndex = films.findIndex((film) => film.id === idInRequest);
+
+  if (foundIndex < 0){return res.sendStatus(404);}
+
+  const itemsRemovedFromList = films.splice(foundIndex, 1);
+  const itemRemoved = itemsRemovedFromList[0];
+
+
+  return res.json(itemRemoved);
 });
 export default router;

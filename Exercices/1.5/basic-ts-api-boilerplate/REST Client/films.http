@@ -10,12 +10,23 @@ POST {{baseUrl}}/films
 Content-Type:application/json
 
 {       
-    "title" : "444AA",
-    "director" : "RRR",
+    "title" : "1a",
+    "director" : "AZEAZ",
     "duration" :120,
     "budget" : 231
     
 }
 
+### create new film conflict
+POST {{baseUrl}}/films
+Content-Type:application/json
+
+{       
+    "title" : "1111aa",
+    "director" : "aa",
+    "duration" :120,
+    "budget" : 231
+    
+}
 ### Read all film sorted by min duration (ascending)
 GET {{baseUrl}}/films?minimum-duration=50
